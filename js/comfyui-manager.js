@@ -897,25 +897,6 @@ class ManagerMenuDialog extends ComfyDialog {
 				}),
 
 				$el("br", {}, []),
-				update_all_button,
-				update_comfyui_button,
-				switch_comfyui_button,
-				fetch_updates_button,
-
-				$el("br", {}, []),
-				$el("button.cm-button", {
-					type: "button",
-					textContent: "Alternatives of A1111",
-					onclick:
-						() => {
-							if(!CustomNodesManager.instance) {
-								CustomNodesManager.instance = new CustomNodesManager(app, self);
-							}
-							CustomNodesManager.instance.show(CustomNodesManager.ShowMode.ALTERNATIVES);
-						}
-				}),
-
-				$el("br", {}, []),
 				$el("button.cm-button-red", {
 					type: "button",
 					textContent: "Restart",
@@ -961,9 +942,7 @@ class ManagerMenuDialog extends ComfyDialog {
 		this.datasrc_combo = document.createElement("select");
 		this.datasrc_combo.setAttribute("title", "Configure where to retrieve node/model information. If set to 'local,' the channel is ignored, and if set to 'channel (remote),' it fetches the latest information each time the list is opened.");
 		this.datasrc_combo.className = "cm-menu-combo";
-		this.datasrc_combo.appendChild($el('option', { value: 'cache', text: 'DB: Channel (1day cache)' }, []));
 		this.datasrc_combo.appendChild($el('option', { value: 'local', text: 'DB: Local' }, []));
-		this.datasrc_combo.appendChild($el('option', { value: 'remote', text: 'DB: Channel (remote)' }, []));
 
 		// preview method
 		let preview_combo = document.createElement("select");
@@ -1112,39 +1091,6 @@ class ManagerMenuDialog extends ComfyDialog {
 			share_combo,
 			component_policy_combo,
 			dbl_click_policy_combo,
-			$el("br", {}, []),
-
-			$el("br", {}, []),
-			$el("filedset.cm-experimental", {}, [
-					$el("legend.cm-experimental-legend", {}, ["EXPERIMENTAL"]),
-					$el("button.cm-experimental-button", {
-						type: "button",
-						textContent: "Snapshot Manager",
-						onclick:
-							() => {
-								if(!SnapshotManager.instance)
-								SnapshotManager.instance = new SnapshotManager(app, self);
-								SnapshotManager.instance.show();
-							}
-					}),
-					$el("button.cm-experimental-button", {
-						type: "button",
-						textContent: "Install PIP packages",
-						onclick:
-							async () => {
-								var url = await customPrompt("Please enumerate the pip packages to be installed.\n\nExample: insightface opencv-python-headless>=4.1.1\n", "");
-
-								if (url !== null) {
-									install_pip(url, self);
-								}
-							}
-					}),
-					$el("button.cm-experimental-button", {
-						type: "button",
-						textContent: "Unload models",
-						onclick: () => { free_models(); }
-					})
-				]),
 		];
 	}
 
@@ -1252,12 +1198,6 @@ class ManagerMenuDialog extends ComfyDialog {
 				}),
 				$el("br", {}, []),
 		];
-
-		var textarea = document.createElement("div");
-		textarea.className = "cm-notice-board";
-		elts.push(textarea);
-
-		init_notice(textarea);
 
 		return elts;
 	}
