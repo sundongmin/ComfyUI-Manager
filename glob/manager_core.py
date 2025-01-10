@@ -673,7 +673,7 @@ class UnifiedManager:
         self.active_nodes = {}            # node_id -> node_version * fullpath
 
         # reload 'cnr_map' and 'repo_cnr_map'
-        cnrs = await cnr_utils.get_cnr_data(cache_mode=cache_mode)
+        cnrs = await cnr_utils.get_cnr_data(limit=1, cache_mode=cache_mode)
 
         for x in cnrs:
             self.cnr_map[x['id']] = x
