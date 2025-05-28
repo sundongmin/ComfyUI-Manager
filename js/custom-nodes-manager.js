@@ -784,42 +784,13 @@ export class CustomNodesManager {
 		}, {
 			id: 'author',
 			name: 'Author',
-			width: 120,
+			width: 200,
 			classMap: "cn-pack-author", 
 			formatter: (author, rowItem, columnItem) => {
 				if (rowItem.trust) {
 					return `<span tooltip="This author has been active for more than six months in GitHub">✅ ${author}</span>`;
 				}
 				return author;
-			}
-		}, {
-			id: 'stars',
-			name: '★',
-			align: 'center',
-			classMap: "cn-pack-stars",
-			formatter: (stars) => {
-				if (stars < 0) {
-					return 'N/A';
-				}
-				if (typeof stars === 'number') {
-					return stars.toLocaleString();
-				}
-				return stars;
-			}
-		}, {
-			id: 'last_update',
-			name: 'Last Update',
-			align: 'center',
-			type: 'date',
-			width: 100,
-			classMap: "cn-pack-last-update",
-			formatter: (last_update) => {
-				if (last_update < 0) {
-					return 'N/A';
-				}
-				const ago = getTimeAgo(last_update);
-				const short = `${last_update}`.split(' ')[0];
-				return `<span tooltip="${ago}">${short}</span>`;
 			}
 		}];
 

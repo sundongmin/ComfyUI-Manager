@@ -937,12 +937,6 @@ class ManagerMenuDialog extends ComfyDialog {
 				}),
 
 				$el("br", {}, []),
-				update_all_button,
-				update_comfyui_button,
-				switch_comfyui_button,
-				// fetch_updates_button,
-
-				$el("br", {}, []),
 				restart_stop_button,
 			];
 
@@ -958,8 +952,6 @@ class ManagerMenuDialog extends ComfyDialog {
 		this.datasrc_combo = document.createElement("select");
 		this.datasrc_combo.setAttribute("title", "Configure where to retrieve node/model information. If set to 'local,' the channel is ignored, and if set to 'channel (remote),' it fetches the latest information each time the list is opened.");
 		this.datasrc_combo.className = "cm-menu-combo";
-		this.datasrc_combo.appendChild($el('option', { value: 'cache', text: 'DB: Channel (1day cache)' }, []));
-		this.datasrc_combo.appendChild($el('option', { value: 'local', text: 'DB: Local' }, []));
 		this.datasrc_combo.appendChild($el('option', { value: 'remote', text: 'DB: Channel (remote)' }, []));
 
 		api.fetchApi('/manager/db_mode')
@@ -1096,34 +1088,6 @@ class ManagerMenuDialog extends ComfyDialog {
 			share_combo,
 			component_policy_combo,
 			update_policy_combo,
-			$el("br", {}, []),
-
-			$el("br", {}, []),
-			$el("filedset.cm-experimental", {}, [
-					$el("legend.cm-experimental-legend", {}, ["EXPERIMENTAL"]),
-					$el("button.cm-experimental-button", {
-						type: "button",
-						textContent: "Snapshot Manager",
-						onclick:
-							() => {
-								if(!SnapshotManager.instance)
-								SnapshotManager.instance = new SnapshotManager(app, self);
-								SnapshotManager.instance.show();
-							}
-					}),
-					$el("button.cm-experimental-button", {
-						type: "button",
-						textContent: "Install PIP packages",
-						onclick:
-							async () => {
-								var url = await customPrompt("Please enumerate the pip packages to be installed.\n\nExample: insightface opencv-python-headless>=4.1.1\n", "");
-
-								if (url !== null) {
-									install_pip(url, self);
-								}
-							}
-					})
-				]),
 		];
 	}
 
@@ -1231,12 +1195,6 @@ class ManagerMenuDialog extends ComfyDialog {
 				}),
 				$el("br", {}, []),
 		];
-
-		var textarea = document.createElement("div");
-		textarea.className = "cm-notice-board";
-		elts.push(textarea);
-
-		init_notice(textarea);
 
 		return elts;
 	}
